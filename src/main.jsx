@@ -6,9 +6,15 @@ import App from "./App";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "./index.css";
+import { ThemeContext, ThemeProvider } from "./contexts/ThemeContext";
+import UserContextProvider from "./contexts/UserContext";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <App />
+    <ThemeProvider>
+      <UserContextProvider>
+        <App />
+      </UserContextProvider>
+    </ThemeProvider>
   </StrictMode>
 );

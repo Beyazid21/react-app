@@ -2,11 +2,8 @@
   color: brown;
   font-size: large;
 }
-
-.new {
-  border: 1px solid red;
-
-  padding: 10px;
+.pointer {
+  cursor: pointer;
 }
 
 .f30 {

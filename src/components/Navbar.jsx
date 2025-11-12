@@ -1,12 +1,20 @@
 import { NavLink } from "react-router";
 import Logo from "./Logo";
 import SearchForm from "./SearchForm";
+import { useContext } from "react";
+import { ThemeContext } from "../contexts/ThemeContext";
+import ThemeSelector from "./ThemeSelector";
+import { UserContext } from "../contexts/UserContext";
+import { Link } from "react-router";
 
 export default function Navbar() {
+  const { theme } = useContext(ThemeContext);
+  const { watchList, removeFromWatchList } = useContext(UserContext);
+  console.log(theme);
   return (
     <nav
-      className="navbar navbar-expand-lg bg-dark border-bottom border-body"
-      data-bs-theme="dark"
+      className={`navbar navbar-expand-lg bg-${theme} border-bottom border-body`}
+      data-bs-theme={theme}
     >
       <div className="container">
         <Logo />
@@ -42,6 +50,17 @@ export default function Navbar() {
           </ul>
 
           <SearchForm />
+          <Link
+            to="/watchlist"
+            className={`btn btn-${theme} border position-relative ms-1`}
+          >
+            <i className="bi bi-heart-fill"></i>
+            <span className="position-absolute top-0 start-100 badge rounded-pill bg-danger translate-middle">
+              {watchList.length}
+            </span>
+          </Link>
+
+          <ThemeSelector />
         </div>
       </div>
     </nav>

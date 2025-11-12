@@ -6,6 +6,7 @@ import { createBrowserRouter, RouterProvider } from "react-router";
 import MainLayout from "./layouts/MainLayout";
 import SearchResult from "./pages/SearchResult";
 import TopRatedMovies from "./pages/TopRatedMovies";
+import UserWatchList from "./pages/UserWatchList";
 
 const routes = createBrowserRouter([
   {
@@ -17,6 +18,7 @@ const routes = createBrowserRouter([
       { path: "/movies/:id", element: <MovieDetails /> },
       { path: "search", element: <SearchResult /> },
       { path: "top-rated", element: <TopRatedMovies /> },
+      { path: "Watchlist", element: <UserWatchList /> },
     ],
   },
 ]); //Bizim uygulamamızın kök yolu için bir rota tanımlar ve Home bileşenini bu yola bağlar.

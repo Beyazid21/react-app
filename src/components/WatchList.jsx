@@ -1,38 +1,29 @@
 import WatchListMovie from "./WatchListMovie.jsx";
 
-export default function WatchList({
-  watchListMovies,
-  isWatchListOpen,
-  onHandleRemoveFromWatchList,
-}) {
-  if (!isWatchListOpen) {
+export default function WatchList({ movies, title, removeFromWatchList }) {
+  if (!movies) {
     return null;
   }
   return (
-    <div className=" my-3">
-      <div className="card">
-        <div className="card-header">
-          <h2 className="title h5 mb-0">Watch List</h2>
-        </div>
-
-        <div className="card-body">
-          {watchListMovies.length == 0 ? (
-            <div>Film tapılmadı</div>
-          ) : (
-            <div
-              id="movie-list"
-              className="row row-cols-3 row-cols-md-4 row-cols-lg-6 g-1 g-lg-3"
-            >
-              {watchListMovies.map((movie, index) => (
-                <WatchListMovie
-                  key={index}
-                  movieObj={movie}
-                  onHandleRemoveFromWatchList={onHandleRemoveFromWatchList}
-                />
-              ))}
-            </div>
-          )}
-        </div>
+    <div className="container py-3">
+      <h1 className="mb-3 h4">{title}</h1>
+      <div className="card-body">
+        {movies.length == 0 ? (
+          <div>Film tapılmadı</div>
+        ) : (
+          <div
+            id="movie-list"
+            className="row row-cols-3 row-cols-md-4 row-cols-lg-6 g-1 g-lg-3"
+          >
+            {movies.map((movie, index) => (
+              <WatchListMovie
+                key={index}
+                movieObj={movie}
+                removeFromWatchList={removeFromWatchList}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router";
+import { ThemeContext } from "../contexts/ThemeContext";
 
 export default function SearchForm({}) {
+  const { theme } = useContext(ThemeContext);
   const [serachQuery, setSearchQuery] = useState("");
   const navigete = useNavigate();
   function handleSubmit(e) {
@@ -31,7 +33,7 @@ export default function SearchForm({}) {
         onChange={(e) => setSearchQuery(e.target.value)}
         value={serachQuery}
       />
-      <button className="btn btn-outline-light" type="submit">
+      <button className={`btn btn-${theme}`} type="submit">
         <i className="bi bi-search"></i>
       </button>
     </form>

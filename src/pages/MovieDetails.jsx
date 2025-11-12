@@ -1,9 +1,10 @@
 import { useParams } from "react-router";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Loading from "../components/Loading";
 import ErrorMessage from "../components/ErrorMessage";
 import "../index.css";
 import SimilarMovies from "./SimilarMovies";
+import { UserContext } from "../contexts/UserContext";
 
 const api_key = "89aa20fbb4f80528bc1de3764da78721";
 const api_url = "https://api.themoviedb.org/3";
@@ -16,6 +17,8 @@ export default function MovieDetails() {
   const [error, setError] = useState("");
   const [actors, setActors] = useState([]);
   const [showAll, setShowAll] = useState(true);
+  const { watchList, addToWatchList, removeFromWatchList } =
+    useContext(UserContext);
 
   useEffect(() => {
     async function getMovie() {
@@ -29,6 +32,7 @@ export default function MovieDetails() {
         setMovie(data);
         setActors(data.credits.cast.slice(0, 12).map((actor) => actor));
         setError("");
+        setShowAll(true);
       } catch (err) {
         setError(err.message);
       }
@@ -36,6 +40,9 @@ export default function MovieDetails() {
     }
     getMovie();
   }, [id]);
+  function checkMovie(movie) {
+    return watchList.some((m) => m.id === movie.id);
+  }
 
   if (loading) return <Loading />;
   if (error) return <ErrorMessage message={error} />;
@@ -60,12 +67,22 @@ export default function MovieDetails() {
         {/*  Content (üst qat) */}
         <div className="poster-content container py-5 text-white">
           <div className="row align-items-start">
-            <div className="col-md-4 mb-4">
+            <div className="col-md-4 mb-4 position-relative">
               <img
                 src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
-                className="img-fluid rounded shadow"
+                className="img-fluid rounded shadow "
                 alt={movie.title}
               />
+              <i
+                className={`btn bi ${
+                  checkMovie(movie) ? "bi-heart-fill" : "bi-heart"
+                } text-danger fs-2 position-absolute top-0 end-0 translate-middle-x`}
+                onClick={() => {
+                  checkMovie(movie)
+                    ? removeFromWatchList(movie)
+                    : addToWatchList(movie);
+                }}
+              ></i>
             </div>
 
             <div className="col-md-8">
